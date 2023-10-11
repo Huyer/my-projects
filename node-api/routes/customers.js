@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { CONNECTION_STRING } = require("../constant/dbSettings");
 
 // Import mô hình danh mục
-const Category = require("../models/Category");
+const Customer = require("../models/Customer");
 
 // Kết nối với cơ sở dữ liệu MongoDB (node-api)
 mongoose.connect(CONNECTION_STRING, {
@@ -20,16 +20,8 @@ router.post("/", async (req, res) => {
     //thêm thuộc tính ngày khởi tạo
     data.CreateDate = new Date();
 
-    // Kiểm tra xem đã tồn tại danh mục có trường "name" giống với giá trị "name" trong yêu cầu POST
-    const existingCategory = await Category.findOne({ Name: data.Name });
-
-    if (existingCategory) {
-      // Nếu danh mục đã tồn tại, gửi thông báo lỗi
-      return res.status(400).send({ message: "Category already exists." });
-    }
-
     // Nếu danh mục chưa tồn tại, tạo danh mục mới và lưu vào cơ sở dữ liệu
-    const newItem = new Category(data);
+    const newItem = new Customer(data);
     newItem
       .save()
       .then((result) => {
@@ -44,10 +36,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-// lấy toàn bộ danh sách category
+// lấy toàn bộ danh sách customer
 router.get("/", function (req, res, next) {
   try {
-    Category.find()
+    Customer.find()
       .then((result) => {
         res.send(result);
       })
@@ -63,7 +55,7 @@ router.get("/", function (req, res, next) {
 router.get("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
-    Category.findById(id)
+    Customer.findById(id)
       .then((result) => {
         res.send(result);
       })
@@ -75,14 +67,13 @@ router.get("/:id", function (req, res, next) {
   }
 });
 
-//update category
+//update customer
 router.patch("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
-    let data = req.body;
-    data.UpdateDate = new Date();
+    const data = req.body;
 
-    Category.findByIdAndUpdate(id, data, {
+    Customer.findByIdAndUpdate(id, data, {
       new: true,
     })
       .then((result) => {
@@ -96,11 +87,11 @@ router.patch("/:id", function (req, res, next) {
   }
 });
 
-//delete category
+//delete customer
 router.delete("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
-    Category.findByIdAndDelete(id)
+    Customer.findByIdAndDelete(id)
       .then((result) => {
         res.send({ message: "deleted" });
       })
@@ -112,10 +103,10 @@ router.delete("/:id", function (req, res, next) {
   }
 });
 
-//delete all category
+//delete all customer
 router.delete("/", function (req, res, next) {
   try {
-    Category.deleteMany({})
+    Customer.deleteMany({})
       .then((result) => {
         res.send({ message: "All categories deleted" });
       })
@@ -126,4 +117,5 @@ router.delete("/", function (req, res, next) {
     res.sendStatus(500);
   }
 });
+
 module.exports = router;

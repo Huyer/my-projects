@@ -112,7 +112,6 @@ router.delete("/:id", function (req, res, next) {
 //delete all supplier
 router.delete("/", function (req, res, next) {
   try {
-    const { id } = req.params;
     Supplier.deleteMany({})
       .then((result) => {
         res.send({ message: "All categories deleted" });

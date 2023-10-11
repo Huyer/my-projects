@@ -43,18 +43,21 @@ const schema = new mongoose.Schema({
   Birthday: {
     type: Date,
   },
-  Password: {
-    type: String,
-    required: true,
-  },
-  LastActivity: {
+  CreateDate: {
     type: Date,
-    required: true,
   },
-  Locked: {
-    type: Boolean,
-    required: true,
-  },
+  // Password: {
+  //   type: String,
+  //   required: true,
+  // },
+  // LastActivity: {
+  //   type: Date,
+  //   required: true,
+  // },
+  // Locked: {
+  //   type: Boolean,
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Customer", schema);
