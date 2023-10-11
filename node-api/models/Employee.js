@@ -41,21 +41,22 @@ const schema = new mongoose.Schema({
       message: "Email không hợp lệ",
     },
   },
-  Birthday: {
-    type: Date,
-    required: false,
-  },
-  Password: {
-    type: String,
-    required: true,
-  },
-  LastActivity: {
-    type: Date,
-    required: false,
-  },
+  // Birthday: {
+  //   type: Date,
+  //   required: false,
+  // },
+  // Password: {
+  //   type: String,
+  //   required: true,
+  // },
+  // LastActivity: {
+  //   type: Date,
+  //   required: false,
+  // },
   Locked: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
