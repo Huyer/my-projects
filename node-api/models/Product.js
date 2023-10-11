@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   Price: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
     required: true,
     default: 0,
     validate: {
@@ -18,7 +18,7 @@ const productSchema = new mongoose.Schema({
     },
   },
   Discount: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
     default: 0,
     validate: {
       validator: function (value) {
@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema({
     },
   },
   Stock: {
-    type: mongoose.Schema.Types.Decimal128,
+    type: Number,
     default: 0,
     required: true,
   },

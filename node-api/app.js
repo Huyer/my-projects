@@ -8,6 +8,7 @@ var categoriesRouter = require("./routes/categories");
 var suppliersRouter = require("./routes/suppliers");
 var customersRouter = require("./routes/customers");
 var employeesRouter = require("./routes/employees");
+var productsRouter = require("./routes/products");
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use("/categories", categoriesRouter);
 app.use("/suppliers", suppliersRouter);
 app.use("/customers", customersRouter);
 app.use("/employees", employeesRouter);
+app.use("/products", productsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
