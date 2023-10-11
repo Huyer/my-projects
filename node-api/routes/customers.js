@@ -87,13 +87,13 @@ router.patch("/:id", function (req, res, next) {
   }
 });
 
-//delete customer
+//delete customer a
 router.delete("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
     Customer.findByIdAndDelete(id)
       .then((result) => {
-        res.send({ message: "deleted" });
+        res.send({ message: "deletedddd" });
       })
       .catch((err) => {
         res.status(400).send({ message: err.message });

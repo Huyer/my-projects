@@ -60,4 +60,11 @@ const schema = new mongoose.Schema({
   },
 });
 
+schema.virtual("fullName").get(function () {
+  return this.FirstName + " " + this.LastName;
+});
+
+// Đặt tùy chọn để hiển thị trường ảo khi lấy đối tượng
+schema.set("toJSON", { virtuals: true });
+
 module.exports = mongoose.model("Employee", schema);
