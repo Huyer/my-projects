@@ -61,6 +61,21 @@ productSchema.virtual("TotalPrice").get(function () {
   return price - (price * discount) / 100; // Tính giá sản phẩm sau giảm giá
 });
 
+// Virtual with Populate
+productSchema.virtual("Category", {
+  ref: "Category",
+  localField: "CategoryId",
+  foreignField: "_id",
+  justOne: true,
+});
+
+productSchema.virtual("Supplier", {
+  ref: "Supplier",
+  localField: "SupplierId",
+  foreignField: "_id",
+  justOne: true,
+});
+
 productSchema.set("toJSON", {
   virtuals: true,
 });

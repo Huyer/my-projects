@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { CONNECTION_STRING } = require("../constant/dbSettings");
 
 // Import mô hình danh mục
-const Product = require("../models/Product");
+const Order = require("../models/Order");
 
 // Kết nối với cơ sở dữ liệu MongoDB (node-api)
 mongoose.connect(CONNECTION_STRING, {
@@ -13,12 +13,13 @@ mongoose.connect(CONNECTION_STRING, {
 });
 const db = mongoose.connection;
 
-// Route POST để tạo danh mục mới
+// Route POST để tạo new order
 router.post("/", async (req, res) => {
   try {
     const data = req.body;
+
     // Nếu danh mục chưa tồn tại, tạo danh mục mới và lưu vào cơ sở dữ liệu
-    const newItem = new Product(data);
+    const newItem = new Order(data);
     newItem
       .save()
       .then((result) => {
@@ -33,12 +34,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-// lấy toàn bộ danh sách product
+// GET all
 router.get("/", function (req, res, next) {
   try {
-    Product.find()
-      .populate("Category")
-      .populate("Supplier")
+    Order.find()
+      .populate({ path: "OrderDetails.Product", populate: { path: "Category" } })
+      .populate("Customer")
+      .populate("Employee")
       .then((result) => {
         res.send(result);
       })
@@ -50,11 +52,14 @@ router.get("/", function (req, res, next) {
   }
 });
 
-//lấy product theo id
+//get order by id
 router.get("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
-    Product.findById(id)
+    Order.findById(id)
+      .populate({ path: "OrderDetails.Product", populate: { path: "Category" } })
+      .populate("Customer")
+      .populate("Employee")
       .then((result) => {
         res.send(result);
       })
@@ -66,12 +71,12 @@ router.get("/:id", function (req, res, next) {
   }
 });
 
-//update product
+//update order
 router.patch("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
     const data = req.body;
-    Product.findByIdAndUpdate(id, data, {
+    Order.findByIdAndUpdate(id, data, {
       new: true,
     })
       .then((result) => {
@@ -85,11 +90,11 @@ router.patch("/:id", function (req, res, next) {
   }
 });
 
-//delete product
+//delete order
 router.delete("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
-    Product.findByIdAndDelete(id)
+    Order.findByIdAndDelete(id)
       .then((result) => {
         res.send({ message: "deleted" });
       })
@@ -101,10 +106,10 @@ router.delete("/:id", function (req, res, next) {
   }
 });
 
-//delete all products
+//delete all orders
 router.delete("/", function (req, res, next) {
   try {
-    Product.deleteMany({})
+    Order.deleteMany({})
       .then((result) => {
         res.send({ message: "All categories deleted" });
       })
@@ -115,5 +120,4 @@ router.delete("/", function (req, res, next) {
     res.sendStatus(500);
   }
 });
-
 module.exports = router;
