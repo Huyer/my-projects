@@ -23,7 +23,6 @@ OrderDetailSchema.set("toJSON", { virtuals: true });
 const orderSchema = new mongoose.Schema({
   CreatedDate: {
     type: Date,
-    required: true,
     default: Date.now,
   },
   ShippedDate: {

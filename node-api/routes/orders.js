@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   try {
     const data = req.body;
 
-    // Nếu danh mục chưa tồn tại, tạo danh mục mới và lưu vào cơ sở dữ liệu
+    //tạo danh mục mới và lưu vào cơ sở dữ liệu
     const newItem = new Order(data);
     newItem
       .save()

@@ -45,19 +45,22 @@ const schema = new mongoose.Schema({
   },
   CreateDate: {
     type: Date,
+    default: Date.now,
   },
-  // Password: {
-  //   type: String,
-  //   required: true,
-  // },
-  // LastActivity: {
-  //   type: Date,
-  //   required: true,
-  // },
-  // Locked: {
-  //   type: Boolean,
-  //   required: true,
-  // },
+  Password: {
+    type: String,
+    required: true,
+  },
+  LastActivity: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  Locked: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 schema.virtual("fullName").get(function () {

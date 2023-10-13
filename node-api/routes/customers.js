@@ -16,9 +16,7 @@ const db = mongoose.connection;
 // Route POST để tạo danh mục mới
 router.post("/", async (req, res) => {
   try {
-    let data = req.body;
-    //thêm thuộc tính ngày khởi tạo
-    data.CreateDate = new Date();
+    const data = req.body;
 
     // Nếu danh mục chưa tồn tại, tạo danh mục mới và lưu vào cơ sở dữ liệu
     const newItem = new Customer(data);
