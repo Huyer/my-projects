@@ -10,15 +10,20 @@ const SearchManufacturer = ({
   setManufacturer,
 }: SearchManufacturerProps) => {
   const [query, SetQuery] = React.useState("");
-  const filterManufacturers =
-    query === ""
-      ? manufacturers
-      : manufacturers.filter((item) => {
-          item
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""));
-        });
+
+  // const filteredManufacturers =
+  //   query === ""
+  //     ? manufacturers
+  //     : manufacturers.filter((item) =>
+  //         item
+  //           .toLowerCase()
+  //           .replace(/\s+/g, "")
+  //           .includes(query.toLowerCase().replace(/\s+/g, ""))
+  //       );
+
+  const filteredManufacturers = manufacturers.filter((item) =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <div className="search-manufacturer">
@@ -51,28 +56,19 @@ const SearchManufacturer = ({
             afterLeave={() => SetQuery("")}
           >
             <Combobox.Options>
-              {filterManufacturers.length === 0 && query !== "" ? (
+              {filteredManufacturers.map((item) => (
                 <Combobox.Option
-                  value={query}
-                  className="search-manufacturer__option"
+                  key={item}
+                  className={({ active }) =>
+                    `relative search-manufacturer__option ${
+                      active ? "bg-primary-blue text-white" : "text-gray-900"
+                    }`
+                  }
+                  value={item}
                 >
-                  Create "{query}"
+                  {item}
                 </Combobox.Option>
-              ) : (
-                filterManufacturers.map((item) => (
-                  <Combobox.Option
-                    key={item}
-                    className={({ active }) =>
-                      `relative search-manufacturer__option ${
-                        active ? "bg-primary-blue text-white" : "text-gray-900"
-                      }`
-                    }
-                    value={item}
-                  >
-                    {item}
-                  </Combobox.Option>
-                ))
-              )}
+              ))}
             </Combobox.Options>
           </Transition>
         </div>
