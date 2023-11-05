@@ -1,7 +1,7 @@
 "use client";
 import { CarProps } from "@/types";
 import React from "react";
-import { CustomButton } from "../components";
+import { CustomButton, CarDetail } from "../components";
 import { calculateCarRent } from "@/app/utils";
 import Image from "next/image";
 
@@ -71,6 +71,12 @@ const CarCard = ({ car }: CarCardProps) => {
           />
         </div>
       </div>
+
+      <CarDetail
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
